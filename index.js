@@ -7,7 +7,7 @@
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
-const dataUtil = require("./data-util.js");
+const wdata = require("workflow-data");
 
 /**
  * Generates a random hex string
@@ -46,6 +46,7 @@ function validateAlphabetical(str) {
  * @param {any} data - The JSON data to write.
  */
 function writeFile(filepath, data) {
+  console.log(filepath);
   ensureDirectoryExists(path.dirname(filepath));
   const jsonData = JSON.stringify(data, null, 2);
   fs.writeFileSync(filepath, jsonData, "utf8");
@@ -90,17 +91,14 @@ function validateDoc(document) {
   return document;
 }
 
-const CollectionError = new Error("Recieved invalid value for collection.");
-
 class Database {
   /**
    * Creates an instance of Database.
    * @param {string} directory - The path to database directory.
    */
   constructor(directory) {
-    if (!validateAlphabetical(directory)) throw CollectionError;
-    this.directory = directory;
     ensureDirectoryExists(directory);
+    this.directory = directory;
   }
 
   /**
@@ -161,7 +159,7 @@ class Database {
     if (!validateAlphabetical(collection)) throw CollectionError;
     const filepath = `${this.directory}/${collection}.json`;
     const data = readFile(filepath);
-    return dataUtil.filter(data, { _id })[0];
+    return wdata.filter(data, { _id })[0];
   }
 
   /**
@@ -174,7 +172,7 @@ class Database {
     if (!validateAlphabetical(collection)) throw CollectionError;
     const filepath = `${this.directory}/${collection}.json`;
     const data = readFile(filepath);
-    return dataUtil.filter(data, filter);
+    return wdata.filter(data, filter);
   }
 
   /**
@@ -187,7 +185,7 @@ class Database {
     if (!validateAlphabetical(collection)) throw CollectionError;
     const filepath = `${this.directory}/${collection}.json`;
     const data = readFile(filepath);
-    return dataUtil.filter(data, filter)[0];
+    return wdata.filter(data, filter)[0];
   }
 
   /**
@@ -200,7 +198,7 @@ class Database {
     if (!validateAlphabetical(collection)) throw CollectionError;
     const filepath = `${this.directory}/${collection}.json`;
     const data = readFile(filepath);
-    dataUtil.update(data, { _id }, updates);
+    wdata.update(data, { _id }, updates);
     writeFile(filepath, data);
   }
 
@@ -214,7 +212,7 @@ class Database {
     if (!validateAlphabetical(collection)) throw CollectionError;
     const filepath = `${this.directory}/${collection}.json`;
     const data = readFile(filepath);
-    dataUtil.update(data, filter, updates);
+    wdata.update(data, filter, updates);
     writeFile(filepath, data);
   }
 
@@ -227,7 +225,7 @@ class Database {
     if (!validateAlphabetical(collection)) throw CollectionError;
     const filepath = `${this.directory}/${collection}.json`;
     const data = readFile(filepath);
-    dataUtil.erase(data, filter);
+    wdata.erase(data, filter);
     writeFile(filepath, data);
   }
 
@@ -240,7 +238,7 @@ class Database {
     if (!validateAlphabetical(collection)) throw CollectionError;
     const filepath = `${this.directory}/${collection}.json`;
     const data = readFile(filepath);
-    dataUtil.erase(data, { _id });
+    wdata.erase(data, { _id });
     writeFile(filepath, data);
   }
 }
