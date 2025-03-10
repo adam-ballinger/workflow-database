@@ -1,5 +1,5 @@
 /**
- * @fileoverview Minimal, dependency-free JSON file-based database for
+ * @fileoverview Small, simple JSON file-based database for
  * rapidly launching small projects requiring simple data storage.
  *
  * @module database

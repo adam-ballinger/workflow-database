@@ -1,6 +1,6 @@
 # workflow-database
 
-Minimal, dependency-free JSON file-based database for rapidly launching small projects requiring simple data storage.
+Small, simple JSON file-based database for rapidly launching small projects requiring simple data storage.
 
 ---
 
