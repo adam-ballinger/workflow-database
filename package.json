@@ -1,0 +1,26 @@
+{
+  "name": "workflow-database",
+  "version": "1.0.0",
+  "description": "Minimal, dependency-free JSON file-based database for rapidly launching small projects requiring simple data storage.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adam-ballinger/workflow-database.git"
+  },
+  "keywords": [
+    "database",
+    "json",
+    "tiny",
+    "workflow",
+    "workflow-database"
+  ],
+  "author": "Adam Ballinger",
+  "license": "ISC",
+  "files": [
+    "index.js",
+    "README.md"
+  ]
+}

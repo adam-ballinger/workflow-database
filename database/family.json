@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Anna Marie",
+    "title": "Mom",
+    "birthday": "1998-01-07T06:00:00.000Z",
+    "_id": "ad6da185aa27d6a6"
+  },
+  {
+    "name": "John Ballinger",
+    "title": "Brotha",
+    "birthday": "2023-09-02T05:00:00.000Z",
+    "_id": "6a3e02be22f411b8"
+  },
+  {
+    "name": "Adam Ballinger",
+    "title": "Dad",
+    "birthday": "1993-12-01T06:00:00.000Z",
+    "_id": "8a461613250f3039"
+  },
+  {
+    "name": "Aida Marie",
+    "title": "Sister",
+    "birthday": "2018-08-05T05:00:00.000Z",
+    "_id": "0ca58886a0cc262f"
+  },
+  {
+    "name": "Carter Beth",
+    "title": "Sister",
+    "birthday": "2021-11-19T06:00:00.000Z",
+    "_id": "bc305e8069fa7f75"
+  }
+]
