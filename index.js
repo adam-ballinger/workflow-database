@@ -33,12 +33,21 @@ function ensureDirectoryExists(directory) {
 }
 
 /**
- * Checks if a string contains only alphabetical characters (A-Z, a-z).
- * @param {string} str - The input string to validate.
- * @returns {boolean} - Returns true if the string is alphabetical, otherwise false.
+ * Validates whether a given string is a valid path/filename.
+ * Disallows illegal filesystem characters.
+ *
+ * @param {string} path - The file path or filename to validate.
+ * @returns {boolean} True if the path is valid, false otherwise.
  */
-function validateAlphabetical(str) {
-  return /^[A-Za-z]+$/.test(str);
+function validatePath(path) {
+  // Regex matches invalid file path characters: < > : " / \ | ? *
+  const invalidChars = /[<>:"/\\|?*\u0000-\u001F]/;
+
+  if (typeof path !== "string" || !path.trim()) {
+    return false;
+  }
+
+  return !invalidChars.test(path);
 }
 
 /**
@@ -46,7 +55,7 @@ function validateAlphabetical(str) {
  * @param {any} data - The JSON data to write.
  */
 function writeFile(filepath, data) {
-  console.log(filepath);
+  validatePath(writeFile);
   ensureDirectoryExists(path.dirname(filepath));
   const jsonData = JSON.stringify(data, null, 2);
   fs.writeFileSync(filepath, jsonData, "utf8");
@@ -107,7 +116,7 @@ class Database {
    * @param {Object} document - The document to be saved.
    */
   insertOne(collection, document) {
-    if (!validateAlphabetical(collection)) throw CollectionError;
+    if (!validatePath(collection)) throw CollectionError;
     if (
       typeof document !== "object" ||
       document === null ||
@@ -131,7 +140,7 @@ class Database {
    * @throws {TypeError} If docs is not an array of objects.
    */
   insertMany(collection, docs) {
-    if (!validateAlphabetical(collection)) throw CollectionError;
+    if (!validatePath(collection)) throw CollectionError;
     if (
       !Array.isArray(docs) ||
       !docs.every(
@@ -156,7 +165,7 @@ class Database {
    * @returns {Object|undefined} - The document if found, otherwise undefined.
    */
   findById(collection, _id) {
-    if (!validateAlphabetical(collection)) throw CollectionError;
+    if (!validatePath(collection)) throw CollectionError;
     const filepath = `${this.directory}/${collection}.json`;
     const data = readFile(filepath);
     return wdata.filter(data, { _id })[0];
@@ -169,7 +178,7 @@ class Database {
    * @returns {Object[]} - An array of matching documents.
    */
   findMany(collection, filter) {
-    if (!validateAlphabetical(collection)) throw CollectionError;
+    if (!validatePath(collection)) throw CollectionError;
     const filepath = `${this.directory}/${collection}.json`;
     const data = readFile(filepath);
     return wdata.filter(data, filter);
@@ -182,7 +191,7 @@ class Database {
    * @returns {Object|undefined} - The first matching document or undefined if none found.
    */
   findOne(collection, filter) {
-    if (!validateAlphabetical(collection)) throw CollectionError;
+    if (!validatePath(collection)) throw CollectionError;
     const filepath = `${this.directory}/${collection}.json`;
     const data = readFile(filepath);
     return wdata.filter(data, filter)[0];
@@ -195,7 +204,7 @@ class Database {
    * @param {Object} updates - The updates to apply.
    */
   updateById(collection, _id, updates) {
-    if (!validateAlphabetical(collection)) throw CollectionError;
+    if (!validatePath(collection)) throw CollectionError;
     const filepath = `${this.directory}/${collection}.json`;
     const data = readFile(filepath);
     wdata.update(data, { _id }, updates);
@@ -209,7 +218,7 @@ class Database {
    * @param {Object} updates - The updates to apply.
    */
   update(collection, filter, updates) {
-    if (!validateAlphabetical(collection)) throw CollectionError;
+    if (!validatePath(collection)) throw CollectionError;
     const filepath = `${this.directory}/${collection}.json`;
     const data = readFile(filepath);
     wdata.update(data, filter, updates);
@@ -222,7 +231,7 @@ class Database {
    * @param {Object} filter - The filter criteria.
    */
   delete(collection, filter) {
-    if (!validateAlphabetical(collection)) throw CollectionError;
+    if (!validatePath(collection)) throw CollectionError;
     const filepath = `${this.directory}/${collection}.json`;
     const data = readFile(filepath);
     wdata.erase(data, filter);
@@ -235,7 +244,7 @@ class Database {
    * @param {string} _id - The ID of the document to delete.
    */
   deleteById(collection, _id) {
-    if (!validateAlphabetical(collection)) throw CollectionError;
+    if (!validatePath(collection)) throw CollectionError;
     const filepath = `${this.directory}/${collection}.json`;
     const data = readFile(filepath);
     wdata.erase(data, { _id });

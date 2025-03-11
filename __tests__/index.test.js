@@ -35,8 +35,10 @@ const family = [
   },
 ];
 
-db.insertMany("family", family);
-
-const sons = db.findMany("family", { relation: "son" });
+db.delete("fam", {});
+db.insertMany("fam", family);
+db.delete("fam", { name: "Liam" });
+db.update("fam", { name: "Max" }, { name: "Maxwell" });
+const sons = db.findMany("fam", { relation: "son" });
 
 console.log(sons);
