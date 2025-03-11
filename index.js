@@ -4,10 +4,10 @@
  *
  * @module database
  */
-const fs = require("fs");
-const path = require("path");
-const crypto = require("crypto");
-const wdata = require("workflow-data");
+import fs from "fs";
+import path from "path";
+import crypto from "crypto";
+import { filter, update, erase } from "workflow-data";
 
 /**
  * Generates a random hex string
@@ -168,7 +168,7 @@ class Database {
     if (!validatePath(collection)) throw CollectionError;
     const filepath = `${this.directory}/${collection}.json`;
     const data = readFile(filepath);
-    return wdata.filter(data, { _id })[0];
+    return filter(data, { _id })[0];
   }
 
   /**
@@ -177,11 +177,11 @@ class Database {
    * @param {Object} filter - The filter criteria.
    * @returns {Object[]} - An array of matching documents.
    */
-  findMany(collection, filter) {
+  findMany(collection, filterCriteria) {
     if (!validatePath(collection)) throw CollectionError;
     const filepath = `${this.directory}/${collection}.json`;
     const data = readFile(filepath);
-    return wdata.filter(data, filter);
+    return filter(data, filterCriteria);
   }
 
   /**
@@ -190,11 +190,11 @@ class Database {
    * @param {Object} filter - The filter criteria.
    * @returns {Object|undefined} - The first matching document or undefined if none found.
    */
-  findOne(collection, filter) {
+  findOne(collection, filterCriteria) {
     if (!validatePath(collection)) throw CollectionError;
     const filepath = `${this.directory}/${collection}.json`;
     const data = readFile(filepath);
-    return wdata.filter(data, filter)[0];
+    return filter(data, filterCriteria)[0];
   }
 
   /**
@@ -207,7 +207,7 @@ class Database {
     if (!validatePath(collection)) throw CollectionError;
     const filepath = `${this.directory}/${collection}.json`;
     const data = readFile(filepath);
-    wdata.update(data, { _id }, updates);
+    update(data, { _id }, updates);
     writeFile(filepath, data);
   }
 
@@ -221,7 +221,7 @@ class Database {
     if (!validatePath(collection)) throw CollectionError;
     const filepath = `${this.directory}/${collection}.json`;
     const data = readFile(filepath);
-    wdata.update(data, filter, updates);
+    update(data, filter, updates);
     writeFile(filepath, data);
   }
 
@@ -234,7 +234,7 @@ class Database {
     if (!validatePath(collection)) throw CollectionError;
     const filepath = `${this.directory}/${collection}.json`;
     const data = readFile(filepath);
-    wdata.erase(data, filter);
+    erase(data, filter);
     writeFile(filepath, data);
   }
 
@@ -247,9 +247,9 @@ class Database {
     if (!validatePath(collection)) throw CollectionError;
     const filepath = `${this.directory}/${collection}.json`;
     const data = readFile(filepath);
-    wdata.erase(data, { _id });
+    erase(data, { _id });
     writeFile(filepath, data);
   }
 }
 
-module.exports = Database;
+export default Database;

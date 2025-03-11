@@ -1,16 +1,10 @@
-# workflow-database
-
 Small, simple JSON file-based database for rapidly launching small projects requiring simple data storage.
-
----
 
 ## Installation
 
 ```bash
 npm install workflow-database
 ```
-
----
 
 ## Usage
 
@@ -33,23 +27,14 @@ db.updateById("users", "123abc", { name: "Alice Smith" });
 db.deleteById("users", "123abc");
 ```
 
----
-
 ## Features
 
-- 📦 **Zero dependencies**
 - ⚡️ **Fast and lightweight**
-- 📁 **JSON file-based storage**
-- 🚀 **Ideal for prototypes and small apps**
+- 📁 **Simple JSON file-based storage**
+- 🚀 **Ideal for rapid prototypes and small tools**
 
----
+## Info
 
-## Author
-
-- **Adam Ballinger**
-
----
-
-## License
-
-ISC
+Full API Docs: [GitHub/wiki](https://github.com/adam-ballinger/workflow-database/wiki)
+License: ISC
+Author: Adam Ballinger
